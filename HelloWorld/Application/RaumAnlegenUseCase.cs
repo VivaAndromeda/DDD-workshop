@@ -17,13 +17,13 @@ namespace HelloWorld.Application
             {
                 throw new ArgumentException(nameof(raum));
             }
+
             this.raumRepository.Save(raum);
         }
 
         private bool VerfifyRaumNummerEindeutig(RaumNummer raumNummer)
         {
-            var raumNummern = this.raumRepository.GetRaumNummern();
-            return !raumNummern.Any(x => x.Nummer == raumNummer.Nummer);
+            return this.raumRepository.GetByRaumNummer(raumNummer) == null;
         }
     }
 }

@@ -6,15 +6,17 @@
         {
             Nummer = raumNummer;
         }
-        public static RaumNummer Create(string raumNummer)
+
+        public static RaumNummer? Create(string raumNummer)
         {
-            if(raumNummer?.Length != 4 || raumNummer.Any(x => !int.TryParse(x + "",out int _)))
+            if (raumNummer?.Length != 4 || raumNummer.Any(x => !int.TryParse(x + "", out int _)))
             {
-                throw new ArgumentException(nameof(raumNummer));
+                return null;
             }
+
             return new RaumNummer(raumNummer);
         }
 
-        public string Nummer { get;  } 
+        public string Nummer { get; }
     }
 }

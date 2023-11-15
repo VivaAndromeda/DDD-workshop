@@ -3,7 +3,7 @@
     public interface IRaumRepository
     {
         void Save(Raum raum);
-        Raum? GetByRaumNummer(RaumNummer raumNummer);
-        IEnumerable<RaumNummer> GetRaumNummern();
+        Raum? GetById(Guid id);
+        Raum? GetByRaumNummer(RaumNummer nummer);
     }
 }
