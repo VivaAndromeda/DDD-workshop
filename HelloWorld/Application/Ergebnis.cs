@@ -8,4 +8,6 @@ public record FehlerErgebnis(
     string? Fehlermeldung
 ) : Ergebnis;
 
-public record ErfolgsErgebnis(Raum raum) : Ergebnis;
+public record RaumErfolgsErgebnis(Raum Raum) : Ergebnis;
+public record PersonErfolgsErgebnis(Person Person) : Ergebnis;
+public record HoleRaumErfolgsErgebnis(Raum Raum, IEnumerable<string> PersonenInKurzschreibweise) : Ergebnis;

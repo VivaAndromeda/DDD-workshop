@@ -10,13 +10,15 @@ namespace HelloWorld.Infrastructure.Controllers;
 public class RaumController : ControllerBase
 {
     private readonly IRaumRepository _raumRepository;
+    private readonly IPersonRepository _personRepository;
     private readonly RaumAnlegenUseCase _raumAnlegenUseCase;
     private readonly PersonZuRaumHinzufuegenUseCase _personHinzufuegenUseCase;
 
-    public RaumController(IRaumRepository raumRepository)
+    public RaumController(IRaumRepository raumRepository, IPersonRepository personRepository)
     {
         _raumRepository = raumRepository;
-        _personHinzufuegenUseCase = new PersonZuRaumHinzufuegenUseCase(raumRepository);
+        _personRepository = personRepository;
+        _personHinzufuegenUseCase = new PersonZuRaumHinzufuegenUseCase(raumRepository, personRepository);
         _raumAnlegenUseCase = new RaumAnlegenUseCase(raumRepository);
     }
 
@@ -24,14 +26,15 @@ public class RaumController : ControllerBase
     [Route("[controller]/{id}")]
     public IActionResult Get(Guid id)
     {
-        Raum? raum = _raumRepository.GetById(id);
-        if(raum == null)
-        {
-            return BadRequest();
-        }
+        var zeigeRaumAnUseCase = new ZeigeRaumAnUseCase(_raumRepository, _personRepository);
+        var ergebnis = zeigeRaumAnUseCase.HoleRaum(id);
 
-        LeseRaumDto raumErgebnis = LeseRaumDto.FromDomain(raum);
-        return Ok(raumErgebnis);
+        return ergebnis switch
+        {
+            FehlerErgebnis fehlerErgebnis => BadRequest(fehlerErgebnis.Fehlermeldung),
+            HoleRaumErfolgsErgebnis holeRaumErfolgsErgebnis => Ok(LeseRaumDto.FromDomain(holeRaumErfolgsErgebnis)),
+            _ => BadRequest()
+        };
     }
 
     [HttpPost]
@@ -43,8 +46,13 @@ public class RaumController : ControllerBase
             return BadRequest();
         }
 
-        _raumAnlegenUseCase.Create(raum);
-        return Ok(raum);
+        var ergebnis = _raumAnlegenUseCase.Create(raum);
+        return ergebnis switch
+        {
+            FehlerErgebnis fehlerErgebnis => BadRequest(fehlerErgebnis.Fehlermeldung),
+            RaumErfolgsErgebnis raumErfolgsErgebnis => Ok(raumErfolgsErgebnis.Raum),
+            _ => BadRequest()
+        };
     }
 
     [HttpPut]
@@ -57,13 +65,7 @@ public class RaumController : ControllerBase
             return BadRequest();
         }
 
-        Person? person = personDto.ToDomain();
-        if(person == null)
-        {
-            return BadRequest();
-        }
-
-        Ergebnis ergebnis = _personHinzufuegenUseCase.Hinzufuegen(id, person);
+        Ergebnis ergebnis = _personHinzufuegenUseCase.Hinzufuegen(id, personDto.Id);
         if(ergebnis is FehlerErgebnis fehlerErgebnis)
         {
             return BadRequest(fehlerErgebnis.Fehlermeldung);

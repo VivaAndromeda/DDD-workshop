@@ -8,17 +8,7 @@ public class RaumRepository : IRaumRepository
 
     public Raum? GetByRaumNummer(RaumNummer raumNummer)
     {
-        return raums.FirstOrDefault(x => x.RaumNummer == raumNummer);
-    }
-
-    public Raum? GetRaumByBenutzername(string personBenutzername)
-    {
-        return raums.FirstOrDefault(x => x.Personen.Select(y => y.Benutzername).Contains(personBenutzername));
-    }
-
-    public Raum? GetRaumByPerson(Guid personId)
-    {
-        return raums.FirstOrDefault(x => x.Personen.Select(y => y.Id).Contains(personId));
+        return raums.FirstOrDefault(x => x.RaumNummer.Nummer == raumNummer.Nummer);
     }
 
     public void Save(Raum raum)

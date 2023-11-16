@@ -11,14 +11,15 @@ namespace HelloWorld.Application
             this.raumRepository = raumRepository;
         }
 
-        public void Create(Raum raum)
+        public Ergebnis Create(Raum raum)
         {
             if (!VerfifyRaumNummerEindeutig(raum.RaumNummer))
             {
-                throw new ArgumentException(nameof(raum));
+                return new FehlerErgebnis($"Raumnummer {raum.RaumNummer} ist nicht verfügbar.");
             }
 
             this.raumRepository.Save(raum);
+            return new RaumErfolgsErgebnis(raum);
         }
 
         private bool VerfifyRaumNummerEindeutig(RaumNummer raumNummer)

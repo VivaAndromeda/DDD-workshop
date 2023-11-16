@@ -4,8 +4,8 @@ namespace HelloWorld.Infrastructure.DTOs
 {
     public class CreateRaumDTO
     {
-        public string RaumNummer { get; }
-        public string Name { get; }
+        public string RaumNummer { get; set; }
+        public string Name { get; set; }
 
         public Raum? ToDomain()
         {

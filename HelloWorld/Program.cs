@@ -10,6 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IRaumRepository, RaumRepository>();
+builder.Services.AddSingleton<IPersonRepository, PersonRepository>();
 
 var app = builder.Build();
 

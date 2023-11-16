@@ -37,14 +37,17 @@ public class Person
         return string.IsNullOrEmpty(vorname) || string.IsNullOrEmpty(nachname) || string.IsNullOrEmpty(benutzername);
     }
 
-    public string InKurzschreibweise()
+    public string Kurzschreibweise
     {
-        string namenszusatz = string.Empty;
-        if(!string.IsNullOrEmpty(Namenszusatz.Value))
+        get
         {
-            namenszusatz = Namenszusatz.Value + " ";
-        }
+            string namenszusatz = string.Empty;
+            if (!string.IsNullOrEmpty(Namenszusatz?.Value))
+            {
+                namenszusatz = Namenszusatz.Value + " ";
+            }
 
-        return $"{Vorname} {namenszusatz}{Nachname} ({Benutzername})";
+            return $"{Vorname} {namenszusatz}{Nachname} ({Benutzername})";
+        }
     }
 }
