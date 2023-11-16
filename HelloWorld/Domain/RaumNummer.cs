@@ -2,6 +2,8 @@
 {
     public class RaumNummer
     {
+        public string Nummer { get; }
+
         private RaumNummer(string raumNummer)
         {
             Nummer = raumNummer;
@@ -16,7 +18,5 @@
 
             return new RaumNummer(raumNummer);
         }
-
-        public string Nummer { get; }
     }
 }
