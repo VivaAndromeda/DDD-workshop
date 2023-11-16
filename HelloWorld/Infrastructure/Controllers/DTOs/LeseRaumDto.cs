@@ -1,7 +1,6 @@
 ﻿using HelloWorld.Application;
-using HelloWorld.Domain;
 
-namespace HelloWorld.Infrastructure.DTOs;
+namespace HelloWorld.Infrastructure.Controllers.DTOs;
 
 public class LeseRaumDto
 {

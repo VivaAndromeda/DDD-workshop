@@ -1,6 +1,6 @@
 ﻿using HelloWorld.Application;
 using HelloWorld.Domain;
-using HelloWorld.Infrastructure.DTOs;
+using HelloWorld.Infrastructure.Controllers.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HelloWorld.Infrastructure.Controllers;
