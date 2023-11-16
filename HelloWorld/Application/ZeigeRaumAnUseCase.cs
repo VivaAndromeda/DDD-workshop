@@ -18,11 +18,11 @@ namespace HelloWorld.Application
             var raum = _raumRepository.GetById(id);
             if (raum == null)
             {
-                return new FehlerErgebnis($"Raum mit Id {id} nicht gefunden.");
+                return new RaumMitIdNichtVorhanden(id);
             }
 
             var personenKurzschreibweisen = raum.PersonenIdsInRaum().Select(x => _personRepository.GetById(x)?.Kurzschreibweise);
-            return new HoleRaumErfolgsErgebnis(raum, personenKurzschreibweisen);
+            return new HoleRaumErfolgreich(raum, personenKurzschreibweisen);
         }
     }
 }

@@ -2,11 +2,11 @@
 {
     public class RaumNummer
     {
-        public string Nummer { get; }
+        public string Value { get; }
 
         private RaumNummer(string raumNummer)
         {
-            Nummer = raumNummer;
+            Value = raumNummer;
         }
 
         public static RaumNummer? Create(string raumNummer)

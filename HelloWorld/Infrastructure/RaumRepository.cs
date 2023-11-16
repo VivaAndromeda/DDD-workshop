@@ -8,7 +8,7 @@ public class RaumRepository : IRaumRepository
 
     public Raum? GetByRaumNummer(RaumNummer raumNummer)
     {
-        return raums.FirstOrDefault(x => x.RaumNummer.Nummer == raumNummer.Nummer);
+        return raums.FirstOrDefault(x => x.RaumNummer.Value == raumNummer.Value);
     }
 
     public void Save(Raum raum)

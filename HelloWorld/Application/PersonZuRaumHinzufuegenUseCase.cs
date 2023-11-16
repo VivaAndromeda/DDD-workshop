@@ -18,13 +18,13 @@ public class PersonZuRaumHinzufuegenUseCase
         var raum = _raumRepository.GetById(raumId);
         if(raum == null)
         {
-            return new FehlerErgebnis($"Raum mit ID {raumId} nicht gefunden.");
+            return new RaumMitIdNichtVorhanden(raumId);
         }
 
         var person = _personRepository.GetById(personId);
         if (person == null)
         {
-            return new FehlerErgebnis($"Person mit ID {personId} nicht gefunden.");
+            return new PersonMitIdNichtVorhanden(personId);
         }
 
         raum.FuegePersonHinzu(personId);

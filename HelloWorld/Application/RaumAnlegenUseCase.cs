@@ -15,7 +15,7 @@ namespace HelloWorld.Application
         {
             if (!VerfifyRaumNummerEindeutig(raum.RaumNummer))
             {
-                return new FehlerErgebnis($"Raumnummer {raum.RaumNummer} ist nicht verfügbar.");
+                return new RaumnummerNichtEindeutig(raum.RaumNummer);
             }
 
             this.raumRepository.Save(raum);

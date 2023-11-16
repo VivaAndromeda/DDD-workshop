@@ -10,13 +10,13 @@ public class LeseRaumDto
     public string RaumNummer { get; init; }
     public IEnumerable<string> Personen { get; init; } = new List<string>();
 
-    public static LeseRaumDto FromDomain(HoleRaumErfolgsErgebnis ergebnis)
+    public static LeseRaumDto FromDomain(HoleRaumErfolgreich ergebnis)
     {
         return new LeseRaumDto
         {
             Id = ergebnis.Raum.Id,
             Name = ergebnis.Raum.Name,
-            RaumNummer = ergebnis.Raum.RaumNummer.Nummer,
+            RaumNummer = ergebnis.Raum.RaumNummer.Value,
             Personen = ergebnis.PersonenInKurzschreibweise
         };
     }
