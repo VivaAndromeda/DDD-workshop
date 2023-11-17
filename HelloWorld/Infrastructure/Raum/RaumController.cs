@@ -4,6 +4,7 @@ using HelloWorld.Application.Raum;
 using HelloWorld.Domain.Person;
 using HelloWorld.Domain.Person.ValueObjects;
 using HelloWorld.Domain.Raum;
+using HelloWorld.Domain.Raum.ValueObjecs;
 using HelloWorld.Infrastructure.Person.Dtos;
 using HelloWorld.Infrastructure.Raum.Dtos;
 using Microsoft.AspNetCore.Mvc;
@@ -46,7 +47,7 @@ public class RaumController : ControllerBase
         {
             return BadRequest();
         }
-        
+
         var raumAnlegenUseCase = new RaumAnlegenUseCase(_raumRepository);
         var ergebnis = raumAnlegenUseCase.Create(raum);
         return ergebnis switch
@@ -61,13 +62,14 @@ public class RaumController : ControllerBase
     [Route("/{id}/person")]
     public IActionResult PutPerson(Guid id, PutPersonDto personDto)
     {
-        var raum = _raumRepository.GetById(id);
+        var raum = _raumRepository.Get(new RaumId(id));
         if(raum == null)
         {
             return BadRequest();
         }
+
         var personHinzufuegenUseCase = new PersonZuRaumHinzufuegenUseCase(_raumRepository, _personRepository);
-        Ergebnis ergebnis = personHinzufuegenUseCase.Hinzufuegen(id, new PersonId(personDto.Id));
+        var ergebnis = personHinzufuegenUseCase.Hinzufuegen(id, new(personDto.Id));
 
         return ergebnis switch
         {

@@ -5,20 +5,20 @@ namespace HelloWorld.Infrastructure.Raum;
 
 public class RaumRepository : IRaumRepository
 {
-    private List<Domain.Raum.RaumAggregate> raums = new();
+    private List<RaumAggregate> raeume = new();
 
-    public Domain.Raum.RaumAggregate? GetByRaumNummer(RaumNummer raumNummer)
+    public void Save(RaumAggregate raum)
     {
-        return raums.FirstOrDefault(x => x.RaumNummer.Value == raumNummer.Value);
+        raeume.Add(raum);
     }
 
-    public void Save(Domain.Raum.RaumAggregate raum)
+    public RaumAggregate? Get(RaumNummer raumNummer)
     {
-        raums.Add(raum);
+        return raeume.FirstOrDefault(x => x.RaumNummer == raumNummer);
     }
 
-    public Domain.Raum.RaumAggregate? GetById(Guid id)
+    public RaumAggregate? Get(RaumId id)
     {
-        return raums.FirstOrDefault(x => x.Id.Value == id);
+        return raeume.FirstOrDefault(x => x.Id == id);
     }
 }
