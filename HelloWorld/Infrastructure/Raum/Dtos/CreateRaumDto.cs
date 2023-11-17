@@ -2,26 +2,22 @@
 using HelloWorld.Domain.Raum;
 using HelloWorld.Domain.Raum.ValueObjecs;
 
-namespace HelloWorld.Infrastructure.Raum.Dtos
+namespace HelloWorld.Infrastructure.Raum.Dtos;
+
+public record CreateRaumDto(string Nummer, string Name)
 {
-    public class CreateRaumDto
+    public RaumAggregate? ToDomain()
     {
-        public string Nummer { get; init; }
-        public string Name { get; init; }
-
-        public RaumAggregate? ToDomain()
+        var raumNummer = RaumNummer.Create(Nummer);
+        if(raumNummer == null)
         {
-            var raumNummer = RaumNummer.Create(Nummer);
-            if (raumNummer == null)
-            {
-                return null;
-            }
-
-            return new RaumAggregate
-            {
-                RaumNummer = raumNummer,
-                Name = new RaumName(Name)
-            };
+            return null;
         }
+
+        return new()
+        {
+            RaumNummer = raumNummer,
+            Name = new(Name)
+        };
     }
 }

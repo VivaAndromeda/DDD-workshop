@@ -3,21 +3,18 @@ using HelloWorld.Application.Common;
 
 namespace HelloWorld.Infrastructure.Raum.Dtos;
 
-public class LeseRaumDto
+public record LeseRaumDto(
+    Guid Id,
+    string Name,
+    string Nummer,
+    IEnumerable<string> Personen
+)
 {
-    public Guid Id { get; init; }
-    public string Name { get; init; }
-    public string RaumNummer { get; init; }
-    public IEnumerable<string> Personen { get; init; } = new List<string>();
-
     public static LeseRaumDto FromDomain(HoleRaumErfolgreich ergebnis)
     {
-        return new LeseRaumDto
-        {
-            Id = ergebnis.Raum.Id.Value,
-            Name = ergebnis.Raum.Name.Value,
-            RaumNummer = ergebnis.Raum.RaumNummer.Value,
-            Personen = ergebnis.PersonenInKurzschreibweise
-        };
+        return new(ergebnis.Raum.Id.Value,
+            ergebnis.Raum.Name.Value,
+            ergebnis.Raum.RaumNummer.Value,
+            ergebnis.PersonenInKurzschreibweise);
     }
 }
