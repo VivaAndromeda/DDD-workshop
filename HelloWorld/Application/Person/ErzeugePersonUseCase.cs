@@ -1,5 +1,6 @@
 ﻿using HelloWorld.Application.Common;
 using HelloWorld.Domain.Person;
+using HelloWorld.Domain.Person.ValueObjects;
 
 namespace HelloWorld.Application.Person
 {
@@ -18,7 +19,7 @@ namespace HelloWorld.Application.Person
             var existierendePerson = _personRepository.Get(person.Benutzername);
             if (existierendePerson != null)
             {
-                return new FehlerErgebnis($"Benutzername {person.Benutzername} ist nicht eindeutig.");
+                return new BenutzernameNichtEindeutig(person.Benutzername);
             }
 
             _personRepository.Save(person);

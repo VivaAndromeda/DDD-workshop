@@ -5,7 +5,9 @@ using HelloWorld.Domain.Raum.ValueObjecs;
 
 namespace HelloWorld.Application.Common;
 
-public record RaumMitIdNichtVorhanden : Ergebnis
+public record Ergebnis;
+
+public sealed record RaumMitIdNichtVorhanden : Ergebnis
 {
     public string Fehlermeldung { get; }
 
@@ -15,7 +17,7 @@ public record RaumMitIdNichtVorhanden : Ergebnis
     }
 }
 
-public record RaumnummerNichtEindeutig : Ergebnis
+public sealed record RaumnummerNichtEindeutig : Ergebnis
 {
     public string Fehlermeldung { get; }
     public RaumnummerNichtEindeutig(RaumNummer raumNummer)
@@ -24,7 +26,7 @@ public record RaumnummerNichtEindeutig : Ergebnis
     }
 }
 
-public record PersonMitIdNichtVorhanden : Ergebnis
+public sealed record PersonMitIdNichtVorhanden : Ergebnis
 {
     public string Fehlermeldung { get; }
 
@@ -33,15 +35,18 @@ public record PersonMitIdNichtVorhanden : Ergebnis
         Fehlermeldung = $"Person mit Id {id.Value} nicht gefunden.";
     }
 }
+public sealed record BenutzernameNichtEindeutig : Ergebnis
+{
+    public string Fehlermeldung { get; }
 
-public record Ergebnis;
+    public BenutzernameNichtEindeutig(PersonBenutzername benutzername)
+    {
+        Fehlermeldung = $"Benutzername {benutzername.Value} ist nicht eindeutig.";
+    }
+}
 
-public record FehlerErgebnis(
-    string? Fehlermeldung
-) : Ergebnis;
+public sealed record RaumErfolgsErgebnis(RaumAggregate Raum) : Ergebnis;
 
-public record RaumErfolgsErgebnis(RaumAggregate Raum) : Ergebnis;
+public sealed record PersonErfolgsErgebnis(PersonAggregate? Person) : Ergebnis;
 
-public record PersonErfolgsErgebnis(PersonAggregate? Person) : Ergebnis;
-
-public record HoleRaumErfolgreich(RaumAggregate Raum, IEnumerable<string> PersonenInKurzschreibweise) : Ergebnis;
+public sealed record HoleRaumErfolgreich(RaumAggregate Raum, IEnumerable<string> PersonenInKurzschreibweise) : Ergebnis;

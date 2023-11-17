@@ -26,7 +26,7 @@ namespace HelloWorld.Infrastructure.Person
 
             return ergebnis switch
             {
-                FehlerErgebnis fehlerErgebnis => BadRequest(fehlerErgebnis.Fehlermeldung),
+                BenutzernameNichtEindeutig fehlerErgebnis => BadRequest(fehlerErgebnis.Fehlermeldung),
                 PersonErfolgsErgebnis personErfolgsErgebnis => Ok(personErfolgsErgebnis.Person),
                 _ => BadRequest()
             };
