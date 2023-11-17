@@ -1,5 +1,7 @@
-using HelloWorld.Domain;
-using HelloWorld.Infrastructure;
+using HelloWorld.Domain.Person;
+using HelloWorld.Domain.Raum;
+using HelloWorld.Infrastructure.Person;
+using HelloWorld.Infrastructure.Raum;
 
 var builder = WebApplication.CreateBuilder(args);
 

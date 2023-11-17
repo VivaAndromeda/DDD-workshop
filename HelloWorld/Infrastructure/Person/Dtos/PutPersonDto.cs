@@ -1,4 +1,4 @@
-﻿namespace HelloWorld.Infrastructure.Controllers.DTOs;
+﻿namespace HelloWorld.Infrastructure.Person.Dtos;
 
 public class PutPersonDto
 {

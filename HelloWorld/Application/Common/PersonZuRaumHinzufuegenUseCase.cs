@@ -1,6 +1,7 @@
-﻿using HelloWorld.Domain;
+﻿using HelloWorld.Domain.Person;
+using HelloWorld.Domain.Raum;
 
-namespace HelloWorld.Application;
+namespace HelloWorld.Application.Common;
 
 public class PersonZuRaumHinzufuegenUseCase
 {

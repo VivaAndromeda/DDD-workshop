@@ -1,6 +1,8 @@
-﻿using HelloWorld.Domain;
+﻿using HelloWorld.Application.Common;
+using HelloWorld.Domain.Person;
+using HelloWorld.Domain.Raum;
 
-namespace HelloWorld.Application
+namespace HelloWorld.Application.Raum
 {
     public class ZeigeRaumAnUseCase
     {

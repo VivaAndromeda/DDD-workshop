@@ -1,4 +1,4 @@
-﻿namespace HelloWorld.Domain;
+﻿namespace HelloWorld.Domain.Person;
 
 public class Namenszusatz
 {

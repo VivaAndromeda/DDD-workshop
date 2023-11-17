@@ -1,4 +1,4 @@
-﻿namespace HelloWorld.Domain
+﻿namespace HelloWorld.Domain.Raum
 {
     public class RaumNummer
     {

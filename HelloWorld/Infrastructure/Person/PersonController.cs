@@ -1,9 +1,11 @@
 ﻿using HelloWorld.Application;
-using HelloWorld.Domain;
-using HelloWorld.Infrastructure.Controllers.DTOs;
+using HelloWorld.Application.Common;
+using HelloWorld.Application.Person;
+using HelloWorld.Domain.Person;
+using HelloWorld.Infrastructure.Person.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HelloWorld.Infrastructure.Controllers
+namespace HelloWorld.Infrastructure.Person
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -17,7 +19,7 @@ namespace HelloWorld.Infrastructure.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(CreatePersonDTO personDto)
+        public IActionResult Post(CreatePersonDto personDto)
         {
             var erzeugePersonUseCase = new ErzeugePersonUseCase(_personRepository);
             var ergebnis = erzeugePersonUseCase.Erzeuge(personDto.ToDomain());

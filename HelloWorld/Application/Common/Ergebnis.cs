@@ -1,6 +1,7 @@
-﻿using HelloWorld.Domain;
+﻿using HelloWorld.Domain.Person;
+using HelloWorld.Domain.Raum;
 
-namespace HelloWorld.Application;
+namespace HelloWorld.Application.Common;
 
 public record RaumMitIdNichtVorhanden : Ergebnis
 {
@@ -37,8 +38,8 @@ public record FehlerErgebnis(
     string? Fehlermeldung
 ) : Ergebnis;
 
-public record RaumErfolgsErgebnis(Raum Raum) : Ergebnis;
+public record RaumErfolgsErgebnis(Domain.Raum.RaumAggregate Raum) : Ergebnis;
 
-public record PersonErfolgsErgebnis(Person Person) : Ergebnis;
+public record PersonErfolgsErgebnis(PersonAggregate? Person) : Ergebnis;
 
-public record HoleRaumErfolgreich(Raum Raum, IEnumerable<string> PersonenInKurzschreibweise) : Ergebnis;
+public record HoleRaumErfolgreich(Domain.Raum.RaumAggregate Raum, IEnumerable<string> PersonenInKurzschreibweise) : Ergebnis;

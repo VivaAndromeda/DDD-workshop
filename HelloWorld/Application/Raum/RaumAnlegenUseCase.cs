@@ -1,6 +1,7 @@
-﻿using HelloWorld.Domain;
+﻿using HelloWorld.Application.Common;
+using HelloWorld.Domain.Raum;
 
-namespace HelloWorld.Application
+namespace HelloWorld.Application.Raum
 {
     public class RaumAnlegenUseCase
     {
@@ -11,7 +12,7 @@ namespace HelloWorld.Application
             this.raumRepository = raumRepository;
         }
 
-        public Ergebnis Create(Raum raum)
+        public Ergebnis Create(Domain.Raum.RaumAggregate raum)
         {
             if (!VerfifyRaumNummerEindeutig(raum.RaumNummer))
             {

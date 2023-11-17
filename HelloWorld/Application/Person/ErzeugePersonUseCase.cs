@@ -1,6 +1,7 @@
-﻿using HelloWorld.Domain;
+﻿using HelloWorld.Application.Common;
+using HelloWorld.Domain.Person;
 
-namespace HelloWorld.Application
+namespace HelloWorld.Application.Person
 {
     public class ErzeugePersonUseCase
     {
@@ -12,7 +13,7 @@ namespace HelloWorld.Application
             _personRepository = personRepository;
         }
 
-        public Ergebnis Erzeuge(Person person)
+        public Ergebnis Erzeuge(PersonAggregate? person)
         {
             var existierendePerson = _personRepository.GetByBenutzername(person.Benutzername);
             if (existierendePerson != null)

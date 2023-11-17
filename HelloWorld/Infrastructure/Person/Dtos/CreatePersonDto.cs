@@ -1,8 +1,8 @@
-﻿using HelloWorld.Domain;
+﻿using HelloWorld.Domain.Person;
 
-namespace HelloWorld.Infrastructure.Controllers.DTOs;
+namespace HelloWorld.Infrastructure.Person.Dtos;
 
-public class CreatePersonDTO
+public class CreatePersonDto
 {
     public string Vorname { get; set; } = string.Empty;
 
@@ -12,8 +12,8 @@ public class CreatePersonDTO
 
     public string? Namenszusatz { get; set; }
 
-    public Person ToDomain()
+    public PersonAggregate? ToDomain()
     {
-        return Person.Erzeuge(Vorname, Nachname, Benutzername, Namenszusatz);
+        return PersonAggregate.Erzeuge(Vorname, Nachname, Benutzername, Namenszusatz);
     }
 }

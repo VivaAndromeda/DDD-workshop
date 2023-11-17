@@ -1,9 +1,13 @@
 ﻿using HelloWorld.Application;
-using HelloWorld.Domain;
-using HelloWorld.Infrastructure.Controllers.DTOs;
+using HelloWorld.Application.Common;
+using HelloWorld.Application.Raum;
+using HelloWorld.Domain.Person;
+using HelloWorld.Domain.Raum;
+using HelloWorld.Infrastructure.Person.Dtos;
+using HelloWorld.Infrastructure.Raum.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HelloWorld.Infrastructure.Controllers;
+namespace HelloWorld.Infrastructure.Raum;
 
 [Route("api/room")]
 [ApiController]
@@ -34,9 +38,9 @@ public class RaumController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Post(CreateRaumDTO raumDto)
+    public IActionResult Post(CreateRaumDto raumDto)
     {
-        Raum? raum = raumDto.ToDomain();
+        var raum = raumDto.ToDomain();
         if(raum == null)
         {
             return BadRequest();
@@ -56,7 +60,7 @@ public class RaumController : ControllerBase
     [Route("/{id}/person")]
     public IActionResult PutPerson(Guid id, PutPersonDto personDto)
     {
-        Raum? raum = _raumRepository.GetById(id);
+        var raum = _raumRepository.GetById(id);
         if(raum == null)
         {
             return BadRequest();

@@ -1,6 +1,6 @@
-﻿namespace HelloWorld.Domain;
+﻿namespace HelloWorld.Domain.Person;
 
-public class Person
+public class PersonAggregate
 {
     public Guid Id { get; } = Guid.NewGuid();
     public string Vorname { get; init; }
@@ -8,7 +8,7 @@ public class Person
     public Namenszusatz? Namenszusatz { get; init; }
     public string Benutzername { get; init; }
 
-    public static Person? Erzeuge(string vorname, string nachname, string benutzername, string? namenszusatz)
+    public static PersonAggregate? Erzeuge(string vorname, string nachname, string benutzername, string? namenszusatz)
     {
         if(PersonIstUngueltig(vorname, nachname, benutzername))
             return null;
@@ -23,7 +23,7 @@ public class Person
             }
         }
 
-        return new Person
+        return new PersonAggregate
         {
             Vorname = vorname,
             Nachname = nachname,

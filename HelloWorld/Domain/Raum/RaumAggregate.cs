@@ -1,6 +1,6 @@
-﻿namespace HelloWorld.Domain
+﻿namespace HelloWorld.Domain.Raum
 {
-    public class Raum
+    public class RaumAggregate
     {
         public Guid Id { get; }
         public string Name { get; set; }
@@ -9,7 +9,7 @@
         Personen nur als Kurzschreibweise rausgeben*/ 
         private IList<Guid> PersonenIds = new List<Guid>();
 
-        public Raum()
+        public RaumAggregate()
         {
             Id = Guid.NewGuid();
         }
