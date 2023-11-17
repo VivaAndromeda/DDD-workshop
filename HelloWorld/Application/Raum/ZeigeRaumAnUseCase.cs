@@ -1,5 +1,6 @@
 ﻿using HelloWorld.Application.Common;
 using HelloWorld.Domain.Person;
+using HelloWorld.Domain.Person.ValueObjects;
 using HelloWorld.Domain.Raum;
 
 namespace HelloWorld.Application.Raum
@@ -23,8 +24,16 @@ namespace HelloWorld.Application.Raum
                 return new RaumMitIdNichtVorhanden(id);
             }
 
-            var personenKurzschreibweisen = raum.PersonenIdsInRaum().Select(x => _personRepository.GetById(x)?.Kurzschreibweise);
+            IReadOnlyList<PersonId> idsVonPersonenInRaum = raum.PersonenIdsInRaum();
+            var personenKurzschreibweisen = ErmittlePersonenKurzschreibweisen(idsVonPersonenInRaum);
             return new HoleRaumErfolgreich(raum, personenKurzschreibweisen);
+        }
+
+        private IEnumerable<string> ErmittlePersonenKurzschreibweisen(IReadOnlyList<PersonId> idsVonPersonenInRaum)
+        {
+            return idsVonPersonenInRaum
+                .Select(x => _personRepository.Get(x)?.Kurzschreibweise)
+                .Where(x => x != null)!;
         }
     }
 }

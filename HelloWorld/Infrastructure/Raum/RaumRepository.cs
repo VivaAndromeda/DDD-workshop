@@ -1,4 +1,5 @@
 ﻿using HelloWorld.Domain.Raum;
+using HelloWorld.Domain.Raum.ValueObjecs;
 
 namespace HelloWorld.Infrastructure.Raum;
 
@@ -18,6 +19,6 @@ public class RaumRepository : IRaumRepository
 
     public Domain.Raum.RaumAggregate? GetById(Guid id)
     {
-        return raums.FirstOrDefault(x => x.Id == id);
+        return raums.FirstOrDefault(x => x.Id.Value == id);
     }
 }

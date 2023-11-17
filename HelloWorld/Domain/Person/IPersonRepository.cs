@@ -1,11 +1,13 @@
-﻿namespace HelloWorld.Domain.Person
+﻿using HelloWorld.Domain.Person.ValueObjects;
+
+namespace HelloWorld.Domain.Person
 {
     public interface IPersonRepository
     {
         public void Save(PersonAggregate? person);
 
-        public PersonAggregate? GetById(Guid id);
+        public PersonAggregate? Get(PersonId id);
 
-        public PersonAggregate? GetByBenutzername(string benutzername);
+        public PersonAggregate? Get(PersonBenutzername benutzername);
     }
 }

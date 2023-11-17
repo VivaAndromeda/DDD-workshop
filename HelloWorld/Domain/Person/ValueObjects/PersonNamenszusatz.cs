@@ -1,22 +1,22 @@
-﻿namespace HelloWorld.Domain.Person;
+﻿namespace HelloWorld.Domain.Person.ValueObjects;
 
-public class Namenszusatz
+public class PersonNamenszusatz
 {
     private static readonly string[] _erlaubteNamenszusaetze = {"von", "van", "de"};
     public string? Value { get; }
 
-    private Namenszusatz(string? namenszusatz)
+    private PersonNamenszusatz(string? namenszusatz)
     {
         Value = namenszusatz;
     }
 
-    public static Namenszusatz? Erzeuge(string? namenszusatz)
+    public static PersonNamenszusatz? Erzeuge(string namenszusatz)
     {
         if(!_erlaubteNamenszusaetze.Contains(namenszusatz))
         {
             return null;
         }
 
-        return new Namenszusatz(namenszusatz);
+        return new PersonNamenszusatz(namenszusatz);
     }
 }

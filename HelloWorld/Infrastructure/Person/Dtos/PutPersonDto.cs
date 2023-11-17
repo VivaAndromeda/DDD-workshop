@@ -2,5 +2,5 @@
 
 public class PutPersonDto
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; init; }
 }

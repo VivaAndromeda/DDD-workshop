@@ -2,6 +2,7 @@
 using HelloWorld.Application.Common;
 using HelloWorld.Application.Raum;
 using HelloWorld.Domain.Person;
+using HelloWorld.Domain.Person.ValueObjects;
 using HelloWorld.Domain.Raum;
 using HelloWorld.Infrastructure.Person.Dtos;
 using HelloWorld.Infrastructure.Raum.Dtos;
@@ -66,7 +67,7 @@ public class RaumController : ControllerBase
             return BadRequest();
         }
         var personHinzufuegenUseCase = new PersonZuRaumHinzufuegenUseCase(_raumRepository, _personRepository);
-        Ergebnis ergebnis = personHinzufuegenUseCase.Hinzufuegen(id, personDto.Id);
+        Ergebnis ergebnis = personHinzufuegenUseCase.Hinzufuegen(id, new PersonId(personDto.Id));
 
         return ergebnis switch
         {

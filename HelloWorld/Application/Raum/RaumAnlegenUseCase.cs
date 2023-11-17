@@ -1,5 +1,6 @@
 ﻿using HelloWorld.Application.Common;
 using HelloWorld.Domain.Raum;
+using HelloWorld.Domain.Raum.ValueObjecs;
 
 namespace HelloWorld.Application.Raum
 {

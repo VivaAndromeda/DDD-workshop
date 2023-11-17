@@ -14,8 +14,8 @@ public class LeseRaumDto
     {
         return new LeseRaumDto
         {
-            Id = ergebnis.Raum.Id,
-            Name = ergebnis.Raum.Name,
+            Id = ergebnis.Raum.Id.Value,
+            Name = ergebnis.Raum.Name.Value,
             RaumNummer = ergebnis.Raum.RaumNummer.Value,
             Personen = ergebnis.PersonenInKurzschreibweise
         };

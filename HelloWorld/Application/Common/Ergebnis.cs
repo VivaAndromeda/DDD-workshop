@@ -1,5 +1,7 @@
 ﻿using HelloWorld.Domain.Person;
+using HelloWorld.Domain.Person.ValueObjects;
 using HelloWorld.Domain.Raum;
+using HelloWorld.Domain.Raum.ValueObjecs;
 
 namespace HelloWorld.Application.Common;
 
@@ -26,9 +28,9 @@ public record PersonMitIdNichtVorhanden : Ergebnis
 {
     public string Fehlermeldung { get; }
 
-    public PersonMitIdNichtVorhanden(Guid id)
+    public PersonMitIdNichtVorhanden(PersonId id)
     {
-        Fehlermeldung = $"Person mit Id {id} nicht gefunden.";
+        Fehlermeldung = $"Person mit Id {id.Value} nicht gefunden.";
     }
 }
 

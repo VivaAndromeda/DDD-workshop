@@ -13,9 +13,9 @@ namespace HelloWorld.Application.Person
             _personRepository = personRepository;
         }
 
-        public Ergebnis Erzeuge(PersonAggregate? person)
+        public Ergebnis Erzeuge(PersonAggregate person)
         {
-            var existierendePerson = _personRepository.GetByBenutzername(person.Benutzername);
+            var existierendePerson = _personRepository.Get(person.Benutzername);
             if (existierendePerson != null)
             {
                 return new FehlerErgebnis($"Benutzername {person.Benutzername} ist nicht eindeutig.");

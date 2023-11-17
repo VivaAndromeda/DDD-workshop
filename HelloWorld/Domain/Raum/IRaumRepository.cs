@@ -1,4 +1,6 @@
-﻿namespace HelloWorld.Domain.Raum
+﻿using HelloWorld.Domain.Raum.ValueObjecs;
+
+namespace HelloWorld.Domain.Raum
 {
     public interface IRaumRepository
     {

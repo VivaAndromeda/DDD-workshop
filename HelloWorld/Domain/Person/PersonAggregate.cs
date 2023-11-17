@@ -1,22 +1,30 @@
-﻿namespace HelloWorld.Domain.Person;
+﻿using HelloWorld.Application.Common;
+using HelloWorld.Domain.Person.ValueObjects;
+
+namespace HelloWorld.Domain.Person;
 
 public class PersonAggregate
 {
-    public Guid Id { get; } = Guid.NewGuid();
-    public string Vorname { get; init; }
-    public string Nachname { get; init; }
-    public Namenszusatz? Namenszusatz { get; init; }
-    public string Benutzername { get; init; }
+    public PersonId Id { get; } = new(Guid.NewGuid());
+    public PersonVorname Vorname { get; init; }
+    public PersonNachname Nachname { get; init; }
+    public PersonNamenszusatz? Namenszusatz { get; init; }
+    public PersonBenutzername Benutzername { get; init; }
+
+    // make constructor private to prevent creating invalid objects
+    private PersonAggregate() { }
 
     public static PersonAggregate? Erzeuge(string vorname, string nachname, string benutzername, string? namenszusatz)
     {
         if(PersonIstUngueltig(vorname, nachname, benutzername))
+        {
             return null;
-        
-        Namenszusatz? erzeugterNamenszusatz = null;
+        }
+
+        PersonNamenszusatz? erzeugterNamenszusatz = null;
         if(!string.IsNullOrEmpty(namenszusatz))
         {
-            erzeugterNamenszusatz = Namenszusatz.Erzeuge(namenszusatz);
+            erzeugterNamenszusatz = PersonNamenszusatz.Erzeuge(namenszusatz);
             if(erzeugterNamenszusatz == null)
             {
                 return null;
@@ -25,29 +33,26 @@ public class PersonAggregate
 
         return new PersonAggregate
         {
-            Vorname = vorname,
-            Nachname = nachname,
-            Benutzername = benutzername,
+            Vorname = PersonVorname.Erzeuge(vorname),
+            Nachname = PersonNachname.Erzeuge(nachname),
+            Benutzername = PersonBenutzername.Erzeuge(benutzername),
             Namenszusatz = erzeugterNamenszusatz
         };
     }
 
     private static bool PersonIstUngueltig(string vorname, string nachname, string benutzername)
     {
-        return string.IsNullOrEmpty(vorname) || string.IsNullOrEmpty(nachname) || string.IsNullOrEmpty(benutzername);
+        return string.IsNullOrEmpty(vorname) 
+            || string.IsNullOrEmpty(nachname) 
+            || string.IsNullOrEmpty(benutzername);
     }
 
     public string Kurzschreibweise
     {
         get
         {
-            string namenszusatz = string.Empty;
-            if (!string.IsNullOrEmpty(Namenszusatz?.Value))
-            {
-                namenszusatz = Namenszusatz.Value + " ";
-            }
-
-            return $"{Vorname} {namenszusatz}{Nachname} ({Benutzername})";
+            string kurzschreibweise = $"{Vorname.Value} {Namenszusatz?.Value} {Nachname.Value} ({Benutzername.Value})";
+            return kurzschreibweise.Replace("  ", " ").Trim();
         }
     }
 }

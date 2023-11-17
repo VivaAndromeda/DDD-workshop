@@ -1,15 +1,17 @@
-﻿using HelloWorld.Domain.Raum;
+﻿using System.Reflection.Metadata.Ecma335;
+using HelloWorld.Domain.Raum;
+using HelloWorld.Domain.Raum.ValueObjecs;
 
 namespace HelloWorld.Infrastructure.Raum.Dtos
 {
     public class CreateRaumDto
     {
-        public string RaumNummer { get; init; }
+        public string Nummer { get; init; }
         public string Name { get; init; }
 
         public RaumAggregate? ToDomain()
         {
-            var raumNummer = Domain.Raum.RaumNummer.Create(RaumNummer);
+            var raumNummer = RaumNummer.Create(Nummer);
             if (raumNummer == null)
             {
                 return null;
@@ -18,7 +20,7 @@ namespace HelloWorld.Infrastructure.Raum.Dtos
             return new RaumAggregate
             {
                 RaumNummer = raumNummer,
-                Name = Name
+                Name = new RaumName(Name)
             };
         }
     }
