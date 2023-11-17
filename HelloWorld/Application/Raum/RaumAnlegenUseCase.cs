@@ -26,7 +26,7 @@ namespace HelloWorld.Application.Raum
 
         private bool VerfifyRaumNummerEindeutig(RaumNummer raumNummer)
         {
-            return this.raumRepository.GetByRaumNummer(raumNummer) == null;
+            return this.raumRepository.Get(raumNummer) == null;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using HelloWorld.Domain.Person;
 using HelloWorld.Domain.Person.ValueObjects;
 using HelloWorld.Domain.Raum;
+using HelloWorld.Domain.Raum.ValueObjecs;
 
 namespace HelloWorld.Application.Common;
 
@@ -15,9 +16,9 @@ public class PersonZuRaumHinzufuegenUseCase
         _personRepository = personRepository;
     }
 
-    public Ergebnis Hinzufuegen(Guid raumId, PersonId personId)
+    public Ergebnis Hinzufuegen(RaumId raumId, PersonId personId)
     {
-        var raum = _raumRepository.GetById(raumId);
+        var raum = _raumRepository.Get(raumId);
         if(raum == null)
         {
             return new RaumMitIdNichtVorhanden(raumId);

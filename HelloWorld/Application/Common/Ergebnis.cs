@@ -9,9 +9,9 @@ public record RaumMitIdNichtVorhanden : Ergebnis
 {
     public string Fehlermeldung { get; }
 
-    public RaumMitIdNichtVorhanden(Guid id)
+    public RaumMitIdNichtVorhanden(RaumId id)
     {
-        Fehlermeldung = $"Raum mit Id {id} nicht gefunden.";
+        Fehlermeldung = $"Raum mit Id {id.Value} nicht gefunden.";
     }
 }
 
@@ -40,8 +40,8 @@ public record FehlerErgebnis(
     string? Fehlermeldung
 ) : Ergebnis;
 
-public record RaumErfolgsErgebnis(Domain.Raum.RaumAggregate Raum) : Ergebnis;
+public record RaumErfolgsErgebnis(RaumAggregate Raum) : Ergebnis;
 
 public record PersonErfolgsErgebnis(PersonAggregate? Person) : Ergebnis;
 
-public record HoleRaumErfolgreich(Domain.Raum.RaumAggregate Raum, IEnumerable<string> PersonenInKurzschreibweise) : Ergebnis;
+public record HoleRaumErfolgreich(RaumAggregate Raum, IEnumerable<string> PersonenInKurzschreibweise) : Ergebnis;

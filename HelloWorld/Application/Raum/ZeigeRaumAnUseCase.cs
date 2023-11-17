@@ -2,6 +2,7 @@
 using HelloWorld.Domain.Person;
 using HelloWorld.Domain.Person.ValueObjects;
 using HelloWorld.Domain.Raum;
+using HelloWorld.Domain.Raum.ValueObjecs;
 
 namespace HelloWorld.Application.Raum
 {
@@ -16,9 +17,9 @@ namespace HelloWorld.Application.Raum
             _personRepository = personRepository;
         }
 
-        public Ergebnis HoleRaum(Guid id)
+        public Ergebnis HoleRaum(RaumId id)
         {
-            var raum = _raumRepository.GetById(id);
+            var raum = _raumRepository.Get(id);
             if (raum == null)
             {
                 return new RaumMitIdNichtVorhanden(id);
