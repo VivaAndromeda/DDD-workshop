@@ -11,6 +11,6 @@ public record PersonVorname
 
     public static PersonVorname Erzeuge(string vorname)
     {
-        return new PersonVorname(vorname);
+        return new(vorname);
     }
 }

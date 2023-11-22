@@ -2,7 +2,8 @@
 
 public class PersonNamenszusatz
 {
-    private static readonly string[] _erlaubteNamenszusaetze = {"von", "van", "de"};
+    private static readonly string[] ErlaubteNamenszusaetze = {"von", "van", "de"};
+
     public string? Value { get; }
 
     private PersonNamenszusatz(string? namenszusatz)
@@ -12,11 +13,16 @@ public class PersonNamenszusatz
 
     public static PersonNamenszusatz? Erzeuge(string namenszusatz)
     {
-        if(!_erlaubteNamenszusaetze.Contains(namenszusatz))
+        if(NamenszusatzNichtVorhandenOderUngueltig(namenszusatz))
         {
             return null;
         }
 
-        return new PersonNamenszusatz(namenszusatz);
+        return new(namenszusatz);
+    }
+
+    private static bool NamenszusatzNichtVorhandenOderUngueltig(string namenszusatz)
+    {
+        return string.IsNullOrEmpty(namenszusatz) || !ErlaubteNamenszusaetze.Contains(namenszusatz);
     }
 }

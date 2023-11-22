@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HelloWorld.Infrastructure.Raum;
 
-[Route("api/room")]
+[Route("api/[controller]")]
 [ApiController]
 public class RaumController : ControllerBase
 {
@@ -22,8 +22,7 @@ public class RaumController : ControllerBase
         _personRepository = personRepository;
     }
 
-    [HttpGet]
-    [Route("[controller]/{raumId}")]
+    [HttpGet("{raumId:guid}")]
     public IActionResult Get(Guid raumId)
     {
         var zeigeRaumAnUseCase = new ZeigeRaumAnUseCase(_raumRepository, _personRepository);
@@ -31,9 +30,9 @@ public class RaumController : ControllerBase
 
         return ergebnis switch
         {
-            HoleRaumErfolgreich holeRaumErfolgsErgebnis => Ok(LeseRaumDto.FromDomain(holeRaumErfolgsErgebnis)),
-            RaumMitIdNichtVorhanden fehlerErgebnis => BadRequest(fehlerErgebnis.Fehlermeldung),
-            _ => BadRequest()
+            RaumErmittelt erfolg => Ok(LeseRaumDto.FromDomain(erfolg)),
+            RaumMitIdNichtVorhanden fehler => BadRequest(fehler.Fehlermeldung),
+            var _ => BadRequest()
         };
     }
 
@@ -50,14 +49,13 @@ public class RaumController : ControllerBase
         var ergebnis = raumAnlegenUseCase.Create(raum);
         return ergebnis switch
         {
-            RaumErfolgsErgebnis raumErfolgsErgebnis => Ok(raumErfolgsErgebnis.Raum),
-            RaumnummerNichtEindeutig fehlerErgebnis => BadRequest(fehlerErgebnis.Fehlermeldung),
-            _ => BadRequest()
+            RaumAngelegt erfolg => Ok(erfolg.Raum),
+            RaumnummerNichtEindeutig fehler => BadRequest(fehler.Fehlermeldung),
+            var _ => BadRequest()
         };
     }
 
-    [HttpPut]
-    [Route("/{raumId}/person")]
+    [HttpPut("{raumId:guid}/person")]
     public IActionResult PutPerson(Guid raumId, PutPersonDto personDto)
     {
         var raum = _raumRepository.Get(new RaumId(raumId));
@@ -67,14 +65,14 @@ public class RaumController : ControllerBase
         }
 
         var personHinzufuegenUseCase = new PersonZuRaumHinzufuegenUseCase(_raumRepository, _personRepository);
-        var ergebnis = personHinzufuegenUseCase.Hinzufuegen(new RaumId(raumId), new(personDto.Id));
+        var ergebnis = personHinzufuegenUseCase.Hinzufuegen(new(raumId), new(personDto.Id));
 
         return ergebnis switch
         {
-            RaumErfolgsErgebnis => Ok(),
-            RaumMitIdNichtVorhanden raumNichtVorhanden => BadRequest(raumNichtVorhanden.Fehlermeldung),
-            PersonMitIdNichtVorhanden personNichtVorhanden => BadRequest(personNichtVorhanden.Fehlermeldung),
-            _ => BadRequest()
+            PersonHinzugefuegt erfolg => Ok(erfolg.Raum),
+            RaumMitIdNichtVorhanden fehler => BadRequest(fehler.Fehlermeldung),
+            PersonMitIdNichtVorhanden fehler => BadRequest(fehler.Fehlermeldung),
+            var _ => BadRequest()
         };
     }
 }

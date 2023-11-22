@@ -10,7 +10,7 @@ public record LeseRaumDto(
     IEnumerable<string> Personen
 )
 {
-    public static LeseRaumDto FromDomain(HoleRaumErfolgreich ergebnis)
+    public static LeseRaumDto FromDomain(RaumErmittelt ergebnis)
     {
         return new(ergebnis.Raum.Id.Value,
             ergebnis.Raum.Name.Value,

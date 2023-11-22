@@ -1,29 +1,43 @@
 ﻿using HelloWorld.Application.Common;
 using HelloWorld.Domain.Person;
-using HelloWorld.Domain.Person.ValueObjects;
 
-namespace HelloWorld.Application.Person
+namespace HelloWorld.Application.Person;
+
+public class ErzeugePersonUseCase
 {
-    public class ErzeugePersonUseCase
+    private readonly IPersonRepository _personRepository;
+
+
+    public ErzeugePersonUseCase(IPersonRepository personRepository)
     {
-        private readonly IPersonRepository _personRepository;
+        _personRepository = personRepository;
+    }
 
-
-        public ErzeugePersonUseCase(IPersonRepository personRepository)
+    public Ergebnis Create(PersonAggregate? person)
+    {
+        if(PersonIstUngueltig(person))
         {
-            _personRepository = personRepository;
+            return new PersonIstUngueltig();
         }
 
-        public Ergebnis Erzeuge(PersonAggregate person)
+        if(PersonExistiertNicht(person!))
         {
-            var existierendePerson = _personRepository.Get(person.Benutzername);
-            if (existierendePerson != null)
-            {
-                return new BenutzernameNichtEindeutig(person.Benutzername);
-            }
-
-            _personRepository.Save(person);
-            return new PersonErfolgsErgebnis(person);
+            return new BenutzernameNichtEindeutig(person!.Benutzername);
         }
+
+        _personRepository.Save(person);
+        return new PersonErfolgsErgebnis(person);
+    }
+
+    private static bool PersonIstUngueltig(PersonAggregate? person)
+    {
+        return person == null;
+    }
+
+    private bool PersonExistiertNicht(PersonAggregate person)
+    {
+        var existierendePerson = _personRepository.Get(person.Benutzername);
+        var personExistiertNicht = existierendePerson == null;
+        return personExistiertNicht;
     }
 }

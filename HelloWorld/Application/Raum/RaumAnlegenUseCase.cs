@@ -2,31 +2,30 @@
 using HelloWorld.Domain.Raum;
 using HelloWorld.Domain.Raum.ValueObjecs;
 
-namespace HelloWorld.Application.Raum
+namespace HelloWorld.Application.Raum;
+
+public class RaumAnlegenUseCase
 {
-    public class RaumAnlegenUseCase
+    private readonly IRaumRepository _raumRepository;
+
+    public RaumAnlegenUseCase(IRaumRepository raumRepository)
     {
-        private readonly IRaumRepository raumRepository;
+        _raumRepository = raumRepository;
+    }
 
-        public RaumAnlegenUseCase(IRaumRepository raumRepository)
+    public Ergebnis Create(RaumAggregate raum)
+    {
+        if(RaumnummerExistiertBereits(raum.RaumNummer))
         {
-            this.raumRepository = raumRepository;
+            return new RaumnummerNichtEindeutig(raum.RaumNummer);
         }
 
-        public Ergebnis Create(Domain.Raum.RaumAggregate raum)
-        {
-            if (!VerfifyRaumNummerEindeutig(raum.RaumNummer))
-            {
-                return new RaumnummerNichtEindeutig(raum.RaumNummer);
-            }
+        _raumRepository.Save(raum);
+        return new RaumAngelegt(raum);
+    }
 
-            this.raumRepository.Save(raum);
-            return new RaumErfolgsErgebnis(raum);
-        }
-
-        private bool VerfifyRaumNummerEindeutig(RaumNummer raumNummer)
-        {
-            return this.raumRepository.Get(raumNummer) == null;
-        }
+    private bool RaumnummerExistiertBereits(RaumNummer raumNummer)
+    {
+        return _raumRepository.Get(raumNummer) != null;
     }
 }

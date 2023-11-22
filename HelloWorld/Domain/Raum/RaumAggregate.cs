@@ -1,33 +1,44 @@
 ﻿using HelloWorld.Domain.Person.ValueObjects;
 using HelloWorld.Domain.Raum.ValueObjecs;
 
-namespace HelloWorld.Domain.Raum
+namespace HelloWorld.Domain.Raum;
+
+public class RaumAggregate
 {
-    public class RaumAggregate
+    public RaumId Id { get; } = new(Guid.NewGuid());
+    public RaumName Name { get; } 
+    public RaumNummer RaumNummer { get; }
+    private readonly IList<PersonId> _personenIds = new List<PersonId>();
+
+    private RaumAggregate(RaumNummer raumNummer, RaumName name)
     {
-        public RaumId Id { get; }
-        public RaumName Name { get; set; }
-        public RaumNummer RaumNummer { get; init; }
-        private readonly IList<PersonId> _personenIds = new List<PersonId>();
-
-        public RaumAggregate()
+        RaumNummer = raumNummer;
+        Name = name;
+    }
+    
+    public static RaumAggregate? Create(string nummer, string name)
+    {
+        var raumNummer = RaumNummer.Create(nummer);
+        if(raumNummer == null)
         {
-            Id = new RaumId(Guid.NewGuid());
+            return null;
+        }
+        
+        return new(raumNummer, new(name));
+    }
+
+    public void FuegePersonHinzu(PersonId personId)
+    {
+        if(_personenIds.Contains(personId))
+        {
+            return;
         }
 
-        public void FuegePersonHinzu(PersonId personId)
-        {
-            if (_personenIds.Contains(personId))
-            {
-                return;
-            }
+        _personenIds.Add(personId);
+    }
 
-            _personenIds.Add(personId);
-        }
-
-        public IReadOnlyList<PersonId> PersonenIdsInRaum()
-        {
-            return _personenIds.AsReadOnly();
-        }
+    public IReadOnlyList<PersonId> PersonenIdsInRaum()
+    {
+        return _personenIds.AsReadOnly();
     }
 }

@@ -7,6 +7,8 @@ namespace HelloWorld.Application.Common;
 
 public record Ergebnis;
 
+public record PersonIstUngueltig : Ergebnis;
+
 public sealed record RaumMitIdNichtVorhanden : Ergebnis
 {
     public string Fehlermeldung { get; }
@@ -20,6 +22,7 @@ public sealed record RaumMitIdNichtVorhanden : Ergebnis
 public sealed record RaumnummerNichtEindeutig : Ergebnis
 {
     public string Fehlermeldung { get; }
+
     public RaumnummerNichtEindeutig(RaumNummer raumNummer)
     {
         Fehlermeldung = $"Raumnummer {raumNummer.Value} ist nicht eindeutig.";
@@ -35,6 +38,7 @@ public sealed record PersonMitIdNichtVorhanden : Ergebnis
         Fehlermeldung = $"Person mit Id {id.Value} nicht gefunden.";
     }
 }
+
 public sealed record BenutzernameNichtEindeutig : Ergebnis
 {
     public string Fehlermeldung { get; }
@@ -45,8 +49,10 @@ public sealed record BenutzernameNichtEindeutig : Ergebnis
     }
 }
 
-public sealed record RaumErfolgsErgebnis(RaumAggregate Raum) : Ergebnis;
+public sealed record PersonHinzugefuegt(RaumAggregate Raum) : Ergebnis;
+
+public sealed record RaumAngelegt(RaumAggregate Raum) : Ergebnis;
 
 public sealed record PersonErfolgsErgebnis(PersonAggregate? Person) : Ergebnis;
 
-public sealed record HoleRaumErfolgreich(RaumAggregate Raum, IEnumerable<string> PersonenInKurzschreibweise) : Ergebnis;
+public sealed record RaumErmittelt(RaumAggregate Raum, IEnumerable<string> PersonenInKurzschreibweise) : Ergebnis;

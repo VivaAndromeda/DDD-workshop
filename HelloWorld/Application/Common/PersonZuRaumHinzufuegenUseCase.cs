@@ -19,19 +19,31 @@ public class PersonZuRaumHinzufuegenUseCase
     public Ergebnis Hinzufuegen(RaumId raumId, PersonId personId)
     {
         var raum = _raumRepository.Get(raumId);
-        if(raum == null)
+        if(RaumExistiertNicht(raum))
         {
             return new RaumMitIdNichtVorhanden(raumId);
         }
 
-        var person = _personRepository.Get(personId);
-        if (person == null)
+        if (PersonExistiertNicht(personId))
         {
             return new PersonMitIdNichtVorhanden(personId);
         }
 
-        raum.FuegePersonHinzu(personId);
+        raum!.FuegePersonHinzu(personId);
 
-        return new RaumErfolgsErgebnis(raum);
+        return new PersonHinzugefuegt(raum);
+    }
+
+    private bool PersonExistiertNicht(PersonId personId)
+    {
+        var person = _personRepository.Get(personId);
+        var personExistiertNicht = person == null;
+        return personExistiertNicht;
+    }
+
+    private static bool RaumExistiertNicht(RaumAggregate? raum)
+    {
+        var raumExistiertNicht = raum == null;
+        return raumExistiertNicht;
     }
 }

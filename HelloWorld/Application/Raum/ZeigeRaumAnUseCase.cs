@@ -20,14 +20,19 @@ namespace HelloWorld.Application.Raum
         public Ergebnis HoleRaum(RaumId id)
         {
             var raum = _raumRepository.Get(id);
-            if (raum == null)
+            if (RaumExistiertNicht(raum))
             {
                 return new RaumMitIdNichtVorhanden(id);
             }
 
-            IReadOnlyList<PersonId> idsVonPersonenInRaum = raum.PersonenIdsInRaum();
+            var idsVonPersonenInRaum = raum!.PersonenIdsInRaum();
             var personenKurzschreibweisen = ErmittlePersonenKurzschreibweisen(idsVonPersonenInRaum);
-            return new HoleRaumErfolgreich(raum, personenKurzschreibweisen);
+            return new RaumErmittelt(raum, personenKurzschreibweisen);
+        }
+
+        private static bool RaumExistiertNicht(RaumAggregate? raum)
+        {
+            return raum == null;
         }
 
         private IEnumerable<string> ErmittlePersonenKurzschreibweisen(IReadOnlyList<PersonId> idsVonPersonenInRaum)

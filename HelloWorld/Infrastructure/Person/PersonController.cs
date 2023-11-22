@@ -22,7 +22,7 @@ namespace HelloWorld.Infrastructure.Person
         public IActionResult Post(CreatePersonDto personDto)
         {
             var erzeugePersonUseCase = new ErzeugePersonUseCase(_personRepository);
-            var ergebnis = erzeugePersonUseCase.Erzeuge(personDto.ToDomain());
+            var ergebnis = erzeugePersonUseCase.Create(personDto.ToDomain());
 
             return ergebnis switch
             {

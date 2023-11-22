@@ -16,6 +16,6 @@ public record RaumNummer
             return null;
         }
 
-        return new RaumNummer(raumNummer);
+        return new(raumNummer);
     }
 }
